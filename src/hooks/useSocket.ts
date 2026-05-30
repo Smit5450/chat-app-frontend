@@ -17,6 +17,12 @@ const useSocket = (handlers: {
   onGetMessages: (data: any) => void;
 
   onGetUsers: (users: any) => void;
+
+  onConnect: () => void;
+
+  onDisconnect: () => void;
+
+  // onReconnect: () => void;
 }) => {
   useEffect(() => {
     connectSocket();
@@ -63,6 +69,24 @@ const useSocket = (handlers: {
       handlers.onMessageDeleted,
     );
 
+    socket.on(
+      "connect",
+
+      handlers.onConnect,
+    );
+
+    socket.on(
+      "disconnect",
+
+      handlers.onDisconnect,
+    );
+
+    // socket.io.on(
+    //   "reconnect",
+    //
+    //   handlers.onReconnect,
+    // );
+
     return () => {
       socket.off("privateMessage");
 
@@ -77,6 +101,12 @@ const useSocket = (handlers: {
       socket.off("message");
 
       socket.off("users");
+
+      socket.off("connect");
+
+      socket.off("disconnect");
+
+      // socket.io.off("reconnect");
     };
   }, []);
 };
