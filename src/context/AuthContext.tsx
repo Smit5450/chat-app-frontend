@@ -2,6 +2,8 @@ import { createContext, type ReactNode, useContext, useState } from "react";
 import { disconnectSocket } from "../services/socket.ts";
 
 type User = {
+  id: string;
+  _id: string;
   userId: string;
   email: string;
   name: string;

@@ -13,7 +13,7 @@ import type { Conversation } from "../types/conversation.ts";
 function Chat() {
   const { logout, user: currentUser } = useAuth();
 
-  const [message, setMessage] = useState<Message>("");
+  const [message, setMessage] = useState<string>("");
 
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -25,13 +25,11 @@ function Chat() {
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
 
-  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>[]>(
-    {},
-  );
+  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>({});
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const [selectedUser, setSelectedUser] = useState<User>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({
@@ -39,7 +37,10 @@ function Chat() {
     });
   }, [messages]);
 
-  const createRoomId = (user1: string, user2: string) => {
+  const createRoomId = (
+    user1: string | undefined | "",
+    user2: string | undefined | "",
+  ) => {
     console.log("createRoomId for ==> ", { user1, user2 });
     return [user1, user2].sort().join("-");
   };
@@ -317,7 +318,7 @@ function Chat() {
     //     newMessage,
     // );
 
-    const roomId = createRoomId(currentUser.id, selectedUser._id);
+    const roomId = createRoomId(currentUser?.id ?? "", selectedUser?._id ?? "");
 
     socket.emit(
       "privateMessage",

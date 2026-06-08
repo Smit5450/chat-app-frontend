@@ -137,7 +137,7 @@ const Sidebar = ({
                   {user.lastMessage?.time}
                 </p>
 
-                {unreadCounts[roomId] > 0 && (
+                {(unreadCounts[roomId] ?? 0) > 0 && (
                   <div
                     className="
                       bg-red-500

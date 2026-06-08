@@ -1,6 +1,8 @@
 export interface Message {
   _id: string;
 
+  sender: string;
+
   room: string;
 
   text: string;

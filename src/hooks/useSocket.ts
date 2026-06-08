@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-import { socket, connectSocket, disconnectSocket } from "../services/socket.ts";
+import { socket, connectSocket } from "../services/socket.ts";
 import type { Message } from "../types/message.ts";
 
 const useSocket = (handlers: {
